@@ -2,9 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.css']
+  template: `
+    <button class="btn" [ngStyle]="{'background-color': color}" (click)="onClick()">
+      {{text}}
+    </button>
+  `
 })
+
 export class ButtonComponent {
   @Input() text: string | undefined;
   @Input() color: string | undefined;
