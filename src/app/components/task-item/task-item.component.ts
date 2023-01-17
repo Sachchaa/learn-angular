@@ -6,8 +6,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-task-item',
   template: `
     <div [ngClass] ="{reminder: task.reminder}" class="task" (dblclick)="onToggle(task)">
-      <h3>{{ task?.text}}<fa-icon [icon]="faTimes" [ngStyle]="{'color': 'red'}" (click)="onDelete(task)"></fa-icon></h3>
-      <p>{{ task?.day}}</p>
+      <h3>{{ task.text}}<fa-icon [icon]="faTimes" [ngStyle]="{'color': 'red'}" (click)="onDelete(task)"></fa-icon></h3>
+      <p>{{ task.day}}</p>
     </div>
   `,
   styles:[`
