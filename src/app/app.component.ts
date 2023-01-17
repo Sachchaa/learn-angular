@@ -5,7 +5,8 @@ import { Component } from '@angular/core';
   template: `
     <div class="container">
       <app-header></app-header>
-      <app-tasks></app-tasks>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
     </div>
   `,
 })

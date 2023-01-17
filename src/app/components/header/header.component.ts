@@ -1,11 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-header',
   template: `
     <header>
       <h2>{{title}}</h2>
-      <app-button color="green" text="Add" (btnClick)="toggleAddTask()"></app-button>
+      <app-button
+        *ngIf="hasRoute('/')"
+        color="{{ showAddTask ? 'red' : 'green' }}"
+        text="{{ showAddTask ? 'Close' : 'Add' }}"
+        (btnClick)="toggleAddTask()">
+      </app-button>
     </header>
 `,
   styles:[`
@@ -18,12 +26,23 @@ import { Component } from '@angular/core';
   `]
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   title: string = 'Task Tracker';
+  showAddTask!: boolean;
+  subscription!: Subscription
 
-  constructor() {}
+  constructor(private uiService: UiService, private router:Router) {
+    this.subscription = this.uiService.onToggle().subscribe((value) => this.showAddTask = value)
+  }
+
+  ngOnInit(): void {
+  }
 
   toggleAddTask() {
-    console.log('toggled')
+   this.uiService.toggleAddTask()
+ }
+
+ hasRoute(route: string) {
+  return this.router.url === route
  }
 }

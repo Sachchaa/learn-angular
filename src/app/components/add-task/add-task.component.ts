@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Task } from 'src/app/Task';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-add-task',
   template: `
-    <form class='add-form' (ngSubmit)="onSubmit()">
+    <form *ngIf="showAddTask" class='add-form' (ngSubmit)="onSubmit()">
       <div class="form-control">
         <label>Task</label>
         <input type="text" name="text" [(ngModel)]="text" id="text" placeholder="Add Task"/>
@@ -32,9 +34,12 @@ export class AddTaskComponent implements OnInit {
   text!: string
   day!: string
   reminder: boolean = false
+  showAddTask!: boolean
+  subscription: Subscription
 
-  constructor() {}
-
+  constructor(private uiService: UiService) {
+    this.subscription = this.uiService.onToggle().subscribe((value) => this.showAddTask = value)
+  }
   ngOnInit(): void {
   }
 
